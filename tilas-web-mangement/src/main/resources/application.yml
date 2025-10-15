@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: tilas-web-mangement
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/tilas
+    username: root
+    password: 1234
+mybatis:
+  configuration:
+#    开启数据库访问的日志打印
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    开启数据库字段与实体类属性之间驼峰映射
+    map-underscore-to-camel-case: true
