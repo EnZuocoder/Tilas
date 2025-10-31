@@ -5,7 +5,7 @@ import com.hfut.tilaswebmangement.pojo.Dept;
 
 import java.util.List;
 
-public interface deptService {
+public interface DeptService {
     List<Dept> findall();
     void delete(Integer id);
 

@@ -1,5 +1,5 @@
 package com.hfut.tilaswebmangement.Controller;
-import com.hfut.tilaswebmangement.Service.deptService;
+import com.hfut.tilaswebmangement.Service.DeptService;
 import com.hfut.tilaswebmangement.pojo.Dept;
 import com.hfut.tilaswebmangement.pojo.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +9,9 @@ import java.util.List;
 @Slf4j//该注解提供log对象
 @RestController//该注解将方法的返回值作为json数据返回给前端并且表明该类是请求处理类
 @RequestMapping("/depts")
-public class deptController {
+public class DeptController {
     @Autowired //为接口注入实现类
-    private deptService service;
+    private DeptService service;
     //处理展示所有部门的请求
     @GetMapping
     public Result list()

@@ -1,7 +1,7 @@
 package com.hfut.tilaswebmangement.Service.impl;
 
-import com.hfut.tilaswebmangement.Mapper.deptMapper;
-import com.hfut.tilaswebmangement.Service.deptService;
+import com.hfut.tilaswebmangement.Mapper.DeptMapper;
+import com.hfut.tilaswebmangement.Service.DeptService;
 import com.hfut.tilaswebmangement.pojo.Dept;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class deptServiceimpl implements deptService {
+public class DeptServiceimpl implements DeptService {
     @Autowired
-    private deptMapper mapper;
+    private DeptMapper mapper;
 
     public List<Dept> findall() {
         return mapper.findall();
