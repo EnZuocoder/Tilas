@@ -3,6 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hfut.tilaswebmangement.Mapper.EmpMapper">
+    <update id="update">
+        update emp
+        <set>
+            username=#{username},
+            <if test="password != null">password=#{password},</if>
+            name=#{name},
+            gender=#{gender},
+            <if test="phone != null">phone=#{phone},</if>
+            <if test="job != null">job=#{job},</if>
+            <if test="salary != null">salary=#{salary},</if>
+            <if test="image != null">image=#{image},</if>
+            <if test="entryDate != null">entry_date=#{entryDate},</if>
+            <if test="deptId != null">dept_id=#{deptId},</if>
+            <if test="createTime != null">create_time=#{createTime},</if>
+            update_time=#{updateTime}
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteByIds">
+        delete from emp where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+                      #{id}
+        </foreach>
+    </delete>
 
     <select id="find" resultType="com.hfut.tilaswebmangement.pojo.Emp">
         select e.* , d.name as deptName  from emp e left join dept d on e.dept_id=d.id
@@ -20,10 +45,14 @@
         </where>
         order by e.update_time desc
     </select>
+
+    <select id="getById" resultType="com.hfut.tilaswebmangement.pojo.Emp">
+            select id, username, password, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time from emp where id=#{id}
+    </select>
+
+<!--    这里用到了主键回显,将插入数据时产生的id封装回对应的对象中-->
     <insert id="add" useGeneratedKeys="true" keyProperty="id">
     insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time)
         value(#{username}, #{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime});
     </insert>
-
-
 </mapper>

@@ -8,6 +8,12 @@ import java.util.List;
 public interface EmpMapper {
     //分页展示交给了PageHelper实现了把不带分页查询的sql结果放在这
     List<Emp> find(EmpQueryParam empQueryParam);
-
+    //增加员工
     void add(Emp emp);
+    //按照id批量删除员工
+    void deleteByIds(Integer[]ids);
+    //根据id查找员工
+    Emp getById(Integer id);
+    //更新员工信息
+    void update(Emp emp);
 }

@@ -9,4 +9,17 @@
         (#{item.empId}, #{item.begin}, #{item.end}, #{item.company}, #{item.job})
     </foreach>
     </insert>
+
+
+    <delete id="deleteByEmpIds">
+            delete from emp_expr where emp_id in
+        <foreach collection="ids" item="empId" separator="," open="(" close=")">
+            #{empId}
+        </foreach>
+    </delete>
+
+
+    <select id="getBatchById" resultType="com.hfut.tilaswebmangement.pojo.EmpExpr">
+            select id, emp_id, begin, end, company, job  from emp_expr where emp_id=#{id}
+    </select>
 </mapper>
