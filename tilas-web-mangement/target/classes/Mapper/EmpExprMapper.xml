@@ -1,0 +1,33 @@
+<!-- src/main/resources/mapper/EmpMapper.xml -->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hfut.tilaswebmangement.Mapper.EmpExprMapper">
+    <insert id="insertBatch">
+    insert into emp_expr(emp_id, begin, end, company, job) values
+    <foreach collection="exprList" item="item" separator=",">
+        (#{item.empId}, #{item.begin}, #{item.end}, #{item.company}, #{item.job})
+    </foreach>
+    </insert>
+    <update id="updateBatch">
+    <foreach collection="exprList" item="item" separator=";">
+        update emp_expr
+        <set>
+            begin=#{item.begin},
+            end=#{item.end},
+            company=#{item.company},
+            job=#{item.job}
+        </set>
+        where emp_id=#{item.empId}
+    </foreach>
+    </update>
+    <delete id="deleteByEmpIds">
+            delete from emp_expr where emp_id in
+        <foreach collection="ids" item="empId" separator="," open="(" close=")">
+            #{empId}
+        </foreach>
+    </delete>
+    <select id="getBatchById" resultType="com.hfut.tilaswebmangement.pojo.EmpExpr">
+            select id, emp_id, begin, end, company, job  from emp_expr where emp_id=#{id}
+    </select>
+</mapper>
