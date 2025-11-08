@@ -10,13 +10,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @Slf4j
+//前端页面中如果不上传图片不会调用该接口
 public class UploadController {
     @Autowired
     private AliyunOssOperator aliyunOssOperator;
     @PostMapping("/upload")
     public Result upload(MultipartFile file) throws Exception {
         log.info("上传文件:{}",file.getOriginalFilename());
-        String url=aliyunOssOperator.upload(file.getBytes(),file.getOriginalFilename());
+        String url = aliyunOssOperator.upload(file.getBytes(), file.getOriginalFilename());
         return Result.success(url);
     }
 }

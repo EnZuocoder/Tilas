@@ -47,6 +47,7 @@ public class EmpController {
         return Result.success();
 
     }
+    //update请求和add请求前端都会调用upload接口上传图片,然后将图片的url传给后端
     @PutMapping
     public Result update(@RequestBody Emp emp)
     {
