@@ -22,4 +22,9 @@
     <select id="getBatchById" resultType="com.hfut.tilaswebmangement.pojo.EmpExpr">
             select id, emp_id, begin, end, company, job  from emp_expr where emp_id=#{id}
     </select>
+    <select id="getEmpGenderData" resultType="java.util.Map">
+        select  if(gender=1,'男性员工','女性员工') name,count(*)
+            value from emp group
+                by gender;
+    </select>
 </mapper>

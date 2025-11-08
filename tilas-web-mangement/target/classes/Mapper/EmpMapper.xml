@@ -49,8 +49,20 @@
     <select id="getById" resultType="com.hfut.tilaswebmangement.pojo.Emp">
             select id, username, password, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time from emp where id=#{id}
     </select>
+    <select id="getJObData" resultType="java.util.Map">
+        select (case
+                    when job = '1' then '班主任'
+                    when job = '2' then '讲师'
+                    when job = '3' then '学工主管'
+                    when job = '4' then '教研主管'
+                    when job = '5' then '咨询师'
+                    else  '其它' end
+                   )pos, count(*) nums from emp
+        group by pos order by nums
+    </select>
 
-<!--    这里用到了主键回显,将插入数据时产生的id封装回对应的对象中-->
+
+    <!--    这里用到了主键回显,将插入数据时产生的id封装回对应的对象中-->
     <insert id="add" useGeneratedKeys="true" keyProperty="id">
     insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time)
         value(#{username}, #{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime});

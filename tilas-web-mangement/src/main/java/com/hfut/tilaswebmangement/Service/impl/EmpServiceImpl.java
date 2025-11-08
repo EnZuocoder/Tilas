@@ -15,6 +15,8 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class EmpServiceImpl implements EmpService {
@@ -97,5 +99,18 @@ public class EmpServiceImpl implements EmpService {
             empExprMapper.insertBatch(exprList);
         }
 
+    }
+
+    @Override
+    public JobOption getEmpJobData() {
+       List<Map<String, Object>>list= mapper.getJObData();
+       List<Object>jobList=list.stream().map(map-> map.get("pos")).toList();
+       List<Object>empCountList=list.stream().map(map-> map.get("nums")).toList();
+        return new JobOption(jobList,empCountList);
+    }
+
+    @Override
+    public List<Map<String, Object>> getEmpGenderData() {
+        return empExprMapper.getEmpGenderData();
     }
 }
