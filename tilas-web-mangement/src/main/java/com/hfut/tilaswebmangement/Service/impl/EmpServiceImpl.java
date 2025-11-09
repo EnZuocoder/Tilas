@@ -94,7 +94,7 @@ public class EmpServiceImpl implements EmpService {
             {
                 empExpr.setEmpId(emp.getId());
             }
-            //先删除再更新
+            //对员工工作采用先删除再插入
             empExprMapper.deleteByEmpIds(ids);
             empExprMapper.insertBatch(exprList);
         }
@@ -112,5 +112,11 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public List<Map<String, Object>> getEmpGenderData() {
         return empExprMapper.getEmpGenderData();
+    }
+
+    @Override
+    public List<Emp> getAll() {
+
+        return mapper.getAll();
     }
 }

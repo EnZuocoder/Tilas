@@ -60,6 +60,21 @@
                    )pos, count(*) nums from emp
         group by pos order by nums
     </select>
+    <select id="getAll" resultType="com.hfut.tilaswebmangement.pojo.Emp">
+        select id, username, password, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time from emp
+
+    </select>
+    <select id="getStudentDegreeData" resultType="java.util.Map">
+        select case
+                   when degree=1 then '初中'
+                   when degree=2 then '高中'
+                   when degree=3 then '大专'
+                   when degree=4 then '本科'
+                   when degree=5 then '硕士'
+                   when degree=6 then '博士'
+                   else '未知学历' end as name
+             ,count(*)  value from student group by degree
+    </select>
 
 
     <!--    这里用到了主键回显,将插入数据时产生的id封装回对应的对象中-->

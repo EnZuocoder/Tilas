@@ -19,4 +19,6 @@ public interface EmpExprMapper {
 
     @MapKey("gender")
     List<Map<String, Object>> getEmpGenderData();
+
+    List<Map<String, Object>> getStudentCountData();
 }

@@ -1,8 +1,5 @@
 package com.hfut.tilaswebmangement.Service;
-import com.hfut.tilaswebmangement.pojo.Emp;
-import com.hfut.tilaswebmangement.pojo.EmpQueryParam;
-import com.hfut.tilaswebmangement.pojo.JobOption;
-import com.hfut.tilaswebmangement.pojo.PageResult;
+import com.hfut.tilaswebmangement.pojo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -19,4 +16,6 @@ public interface EmpService {
     JobOption getEmpJobData();
 
     List<Map<String,Object>> getEmpGenderData();
+
+    List<Emp> getAll();
 }

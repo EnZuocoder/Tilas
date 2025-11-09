@@ -31,7 +31,12 @@ public class EmpController {
         Emp emp=service.getById(id);
         return Result.success(emp);
     }
-
+    @GetMapping("/list")
+    public Result getAll()
+    {
+        log.info("查询所有员工信息");
+        return Result.success(service.getAll());
+    }
     @PostMapping
     public Result add(@RequestBody Emp emp)
     {
