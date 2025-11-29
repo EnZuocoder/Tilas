@@ -3,12 +3,9 @@ import com.hfut.tilaswebmangement.pojo.Emp;
 import com.hfut.tilaswebmangement.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
-import javax.naming.Name;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Mapper
 public interface EmpMapper {
@@ -28,4 +25,7 @@ public interface EmpMapper {
     List<Emp> getAll();
     @MapKey("name")
     List<Map<String, Object>> getStudentDegreeData();
+
+    //登录时根据用户名和密码查询员工
+    Emp getByUsernameAndPassword(Emp emp);
 }

@@ -10,10 +10,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 //将文件上传到阿里云的工具类
-@Component  //交给ioc容器管理成为一个bean对象
+@Component
 public class AliyunOssOperator {
     @Autowired
-    private AliyunOssProperties aliyunOssProperties;
+    private  AliyunOssProperties aliyunOssProperties;
     public String upload(byte[] content, String originalFilename) throws Exception {
         // 从环境变量中获取访问凭证。运行本代码示例之前，请确保已设置环境变量OSS_ACCESS_KEY_ID和OSS_ACCESS_KEY_SECRET。
         EnvironmentVariableCredentialsProvider credentialsProvider = CredentialsProviderFactory.newEnvironmentVariableCredentialsProvider();

@@ -1,4 +1,5 @@
 package com.hfut.tilaswebmangement.Controller;
+import com.hfut.tilaswebmangement.Annotation.LogInfo;
 import com.hfut.tilaswebmangement.Service.DeptService;
 import com.hfut.tilaswebmangement.pojo.Dept;
 import com.hfut.tilaswebmangement.pojo.Result;
@@ -29,6 +30,8 @@ public class DeptController {
         log.info("删除id为{}的部门",id);
         return Result.success();
     }
+    //新增部门
+    @LogInfo //自定义注解结合Spring aop对该方法起到了一个增强的功能
     @PostMapping
     public Result insert(@RequestBody Dept dept)//@RequestBody注解的作用:将json请求体的数据封装在后面的对象中
             //要求json中的字段名,对象有同名属性

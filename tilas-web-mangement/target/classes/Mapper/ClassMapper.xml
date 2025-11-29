@@ -1,0 +1,64 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hfut.tilaswebmangement.Mapper.ClassMapper">
+    <insert id="add">
+        insert into clazz (name, room, begin_date, end_date, master_id, subject, create_time, update_time)
+            value(#{name}, #{room}, #{beginDate}, #{endDate}, #{masterId}, #{subject}, #{createTime}, #{updateTime})
+    </insert>
+    <update id="update">
+        update clazz
+        set name=#{name},
+            room=#{room},
+            begin_date=#{beginDate},
+            end_date=#{endDate},
+            master_id=#{masterId},
+            subject=#{subject},
+            update_time=#{updateTime}
+        where id=#{id}
+    </update>
+    <delete id="deleteById">
+        delete from clazz where id=#{id}
+    </delete>
+    <select id="find" resultType="com.hfut.tilaswebmangement.pojo.Clazz">
+        select clazz.id, clazz.name, clazz.room, clazz.begin_date, clazz.end_date, clazz.master_id, clazz.subject, clazz.create_time, clazz.update_time,emp.name masterName
+        from clazz left join emp on clazz.master_id=emp.id
+        <where>
+            <if test="name!=null and name!=''">
+                clazz.name like concat("%",#{name},"%")
+            </if>
+            <if test="begin!=null and end!=null">
+                    and begin_date between #{begin} and #{end}
+            </if>
+        </where>
+    </select>
+    <select id="getById" resultType="com.hfut.tilaswebmangement.pojo.Clazz">
+        select clazz.id,
+               clazz.name,
+               clazz.room,
+               clazz.begin_date,
+               clazz.end_date,
+               clazz.master_id,
+               clazz.subject,
+               clazz.create_time,
+               clazz.update_time,
+               emp.name as masterName
+        from clazz
+                 left join emp on clazz.master_id = emp.id
+        where clazz.id = #{id}
+    </select>
+    <select id="getAll" resultType="com.hfut.tilaswebmangement.pojo.Clazz">
+        select clazz.id,
+               clazz.name,
+               clazz.room,
+               clazz.begin_date,
+               clazz.end_date,
+               clazz.master_id,
+               clazz.subject,
+               clazz.create_time,
+               clazz.update_time,
+               emp.name as masterName
+        from clazz
+                 left join emp on clazz.master_id = emp.id
+    </select>
+</mapper>

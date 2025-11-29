@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "aliyun.oss")
 public class AliyunOssProperties {
-
     private String endpoint;//bucket所在域名
     private String bucketName;
     private String region;

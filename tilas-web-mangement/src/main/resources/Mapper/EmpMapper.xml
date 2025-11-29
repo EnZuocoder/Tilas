@@ -6,7 +6,6 @@
         update emp
         <set>
             #请帮我修改增加上不为空串的判断
-
             username=#{username},
             <if test="password != null and password!=''">password=#{password},</if>
             name=#{name},
@@ -74,6 +73,9 @@
                    when degree=6 then '博士'
                    else '未知学历' end as name
              ,count(*)  value from student group by degree
+    </select>
+    <select id="getByUsernameAndPassword" resultType="com.hfut.tilaswebmangement.pojo.Emp">
+            select id,username,name from emp where username=#{username} and password=#{password}
     </select>
 
 

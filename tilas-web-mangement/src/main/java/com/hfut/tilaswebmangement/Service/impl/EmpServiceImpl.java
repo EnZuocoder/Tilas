@@ -2,22 +2,18 @@ package com.hfut.tilaswebmangement.Service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hfut.tilaswebmangement.Mapper.EmpExprMapper;
-import com.hfut.tilaswebmangement.Mapper.EmpLogMapper;
 import com.hfut.tilaswebmangement.Mapper.EmpMapper;
 import com.hfut.tilaswebmangement.Service.EmpLogService;
 import com.hfut.tilaswebmangement.Service.EmpService;
 import com.hfut.tilaswebmangement.pojo.*;
+import com.hfut.tilaswebmangement.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
+import java.util.*;
 @Service
 public class EmpServiceImpl implements EmpService {
     @Autowired
@@ -39,7 +35,6 @@ public class EmpServiceImpl implements EmpService {
         // 3. 封装 PageResult 对象
         return new PageResult<>(p.getTotal(), p.getResult());
     }
-
     //将该方法交给spring事务管理,全部成功提交 commit,否则回滚rollback
     @Transactional(rollbackFor = {Exception.class})    //rollbackfor表示那些异常会回滚
     public void add(Emp emp) {
@@ -118,5 +113,24 @@ public class EmpServiceImpl implements EmpService {
     public List<Emp> getAll() {
 
         return mapper.getAll();
+    }
+
+    @Override
+    public LoginInfo login(Emp emp) {
+        System.out.println("调用了login方法");
+        Emp e=mapper.getByUsernameAndPassword(emp);
+        if(e==null)
+            return null;
+        else{
+            LoginInfo info=new LoginInfo();
+            info.setId(e.getId());
+            info.setName(e.getName());
+            info.setUsername(e.getUsername());
+            HashMap<String,Object>map=new HashMap<>();
+            map.put("id",e.getId());
+            map.put("username",e.getUsername());
+            info.setToken(JwtUtils.createToken(map));
+            return info;
+        }
     }
 }
