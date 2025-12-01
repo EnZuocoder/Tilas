@@ -91,6 +91,8 @@ public class EmpServiceImpl implements EmpService {
             }
             //对员工工作采用先删除再插入
             empExprMapper.deleteByEmpIds(ids);
+            if(CollectionUtils.isEmpty(exprList))
+                return;
             empExprMapper.insertBatch(exprList);
         }
 
