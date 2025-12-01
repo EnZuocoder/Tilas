@@ -1,0 +1,87 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hfut.tilaswebmangement.Mapper.EmpMapper">
+    <update id="update">
+        update emp
+        <set>
+            #请帮我修改增加上不为空串的判断
+            username=#{username},
+            <if test="password != null and password!=''">password=#{password},</if>
+            name=#{name},
+            gender=#{gender},
+            <if test="phone != null and phone!=''">phone=#{phone},</if>
+            <if test="job != null and job!=''">job=#{job},</if>
+            <if test="salary != null ">salary=#{salary},</if>
+            <if test="image != null and image!=''">image=#{image},</if>
+            <if test="entryDate != null ">entry_date=#{entryDate},</if>
+            <if test="deptId != null ">dept_id=#{deptId},</if>
+            update_time=#{updateTime}
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteByIds">
+        delete from emp where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+                      #{id}
+        </foreach>
+    </delete>
+
+    <select id="find" resultType="com.hfut.tilaswebmangement.pojo.Emp">
+        select e.* , d.name as deptName  from emp e left join dept d on e.dept_id=d.id
+        <where>
+        <if test="name!=null and name!=''">
+            e.name like concat("%",#{name},"%")
+        </if>
+        <if test="gender!=null">
+            and gender=#{gender}
+        </if>
+
+        <if test="begin!=null and end!=null">
+                and entry_date between #{begin} and #{end}
+        </if>
+        </where>
+        order by e.update_time desc
+    </select>
+
+    <select id="getById" resultType="com.hfut.tilaswebmangement.pojo.Emp">
+            select id, username, password, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time from emp where id=#{id}
+    </select>
+    <select id="getJObData" resultType="java.util.Map">
+        select (case
+                    when job = '1' then '班主任'
+                    when job = '2' then '讲师'
+                    when job = '3' then '学工主管'
+                    when job = '4' then '教研主管'
+                    when job = '5' then '咨询师'
+                    else  '其它' end
+                   )pos, count(*) nums from emp
+        group by pos order by nums
+    </select>
+    <select id="getAll" resultType="com.hfut.tilaswebmangement.pojo.Emp">
+        select id, username, password, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time from emp
+
+    </select>
+    <select id="getStudentDegreeData" resultType="java.util.Map">
+        select case
+                   when degree=1 then '初中'
+                   when degree=2 then '高中'
+                   when degree=3 then '大专'
+                   when degree=4 then '本科'
+                   when degree=5 then '硕士'
+                   when degree=6 then '博士'
+                   else '未知学历' end as name
+             ,count(*)  value from student group by degree
+    </select>
+    <select id="getByUsernameAndPassword" resultType="com.hfut.tilaswebmangement.pojo.Emp">
+            select id,username,name from emp where username=#{username} and password=#{password}
+    </select>
+
+
+    <!--    这里用到了主键回显,将插入数据时产生的id封装回对应的对象中-->
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+    insert into emp(username, name, gender, phone, job, salary, image, entry_date, dept_id, create_time, update_time)
+        value(#{username}, #{name},#{gender},#{phone},#{job},#{salary},#{image},#{entryDate},#{deptId},#{createTime},#{updateTime});
+    </insert>
+</mapper>

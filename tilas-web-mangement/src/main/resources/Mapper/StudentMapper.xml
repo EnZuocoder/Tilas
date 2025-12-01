@@ -1,0 +1,76 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hfut.tilaswebmangement.Mapper.StudentMapper">
+    <insert id="add">
+        insert into student (name, no, gender, phone, id_card, is_college, address, degree, graduation_date, clazz_id, create_time, update_time)
+        value(#{name}, #{no}, #{gender}, #{phone}, #{idCard}, #{isCollege}, #{address}, #{degree}, #{graduationDate}, #{clazzId}, #{createTime}, #{updateTime})
+    </insert>
+    <update id="update">
+        update student set
+            name=#{name},
+            no=#{no},
+            gender=#{gender}
+            ,phone=#{phone},
+            id_card=#{idCard},
+            is_college=#{isCollege},
+            address=#{address},
+            degree=#{degree},
+            graduation_date=#{graduationDate},
+            clazz_id=#{clazzId},
+            update_time=#{updateTime}
+            where id=#{id}
+    </update>
+    <update id="updateViolation">
+    update student set
+        violation_count=#{violationCount},
+        violation_score=#{violationScore},
+        update_time=#{updateTime}
+        where id=#{id}
+    </update>
+    <delete id="deleteByIds">
+        delete from student where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+                      #{id}
+        </foreach>
+    </delete>
+    <select id="find" resultType="com.hfut.tilaswebmangement.pojo.Student">
+        select s.id, s.name, s.no, s.gender, s.phone, s.id_card, s.is_college, s.address, s.degree, s.graduation_date, s.clazz_id, s.violation_count, s.violation_score, s.create_time, s.update_time,
+               clazz.name as clazzName
+        from student s left join clazz on s.clazz_id=clazz.id
+        <where>
+            <if test="name!=null and name!=''">
+                s.name like concat("%",#{name},"%")
+            </if>
+        <if test="clazzId!=null">
+            and s.clazz_id=#{clazzId}
+        </if>
+        <if test="degree!=null">
+            and s.degree=#{degree}
+        </if>
+        </where>
+    </select>
+    <select id="getById" resultType="com.hfut.tilaswebmangement.pojo.Student">
+        select s.id, s.name, s.no, s.gender, s.phone, s.id_card, s.is_college, s.address, s.degree, s.graduation_date, s.clazz_id, s.violation_count, s.violation_score, s.create_time, s.update_time
+        ,c.name clazzName from student s left join clazz c on s.clazz_id=c.id
+        where s.id=#{id}
+    </select>
+    <select id="getStudentDegreeData" resultType="java.util.Map">
+        select case
+                   when degree=1 then '初中'
+                   when degree=2 then '高中'
+                   when degree=3 then '大专'
+                   when degree=4 then '本科'
+                   when degree=5 then '硕士'
+                   when degree=6 then '博士'
+                   else '未知学历' end as name
+
+             ,count(*)  value from student group by degree
+
+    </select>
+    <select id="getStudentCountData" resultType="java.util.Map">
+        select
+            c.name clazz ,count(*) nums
+        from student s left join clazz c on s.clazz_id = c.id  group by s.clazz_id
+    </select>
+</mapper>
