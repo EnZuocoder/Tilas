@@ -1,2 +1,21 @@
-# Tilas
-Tilas智能学习辅助系统
+# Tlias智能学习辅助系统 Java后端
+
+### ------------------web开发的入门级项目,Crud Boy梦开始的地方
+
+## 技术栈:
+
+* 经典的SSM框架,SpringBoot,SpringMVC(Controller,Service,Mapper三层架构),Mybatis(java操作数据库的框架)
+* Maven项目结构管理
+* Mysql 关系型数据库
+* 阿里云oss对象存储服务
+* Jwt 令牌身份验证,
+* Spring框架中的Inteceptor,中间层
+* Aop编程思想,Spring AOP
+
+## 实现功能:
+
+员工管理,部门管理,学员管理,班级管理,登录功能,身份验证,主要当然是增删改查,增加一个,修改一下,删除一个,查询一下(以后估计都会写吐了吧),数据报表统计(这主要还是前端的事儿)
+
+## 运行项目:
+
+首先要有数据库,然后连接上数据库,自己编写建表语句,配xml
